@@ -1,0 +1,244 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+  CLIENT
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  passwordHash  String
+  role          Role      @default(CLIENT)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  projects      Project[]
+  apiSettings   ApiSettings?
+}
+
+// A "Project" is one tracked site / client workspace
+model Project {
+  id             String    @id @default(cuid())
+  name           String
+  domain         String
+  defaultCountry String    @default("US")
+  defaultLang    String    @default("en")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  keywords       TrackedKeyword[]
+  rankSnapshots  RankSnapshot[]
+  keywordResearch KeywordResearch[]
+  serpAnalyses   SerpAnalysis[]
+  competitors    Competitor[]
+  siteAudits     SiteAudit[]
+  contentItems   ContentItem[]
+  reports        Report[]
+
+  @@index([userId])
+}
+
+model ApiSettings {
+  id                String   @id @default(cuid())
+  userId            String   @unique
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  dataForSeoLogin   String?
+  dataForSeoPassword String?
+  openAiKey         String?
+  claudeKey         String?
+  geminiKey         String?
+
+  updatedAt         DateTime @updatedAt
+}
+
+// ---------- Keyword Research ----------
+model KeywordResearch {
+  id            String   @id @default(cuid())
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  seedKeyword   String
+  country       String
+  language      String
+  device        String   @default("desktop")
+  searchEngine  String   @default("google")
+
+  searchVolume  Int?
+  difficulty    Int?
+  cpc           Float?
+  competition   Float?
+  intent        String?
+  trendData     Json?
+  relatedKeywords Json?
+  suggestions   Json?
+  questions     Json?
+  serpFeatures  Json?
+
+  createdAt     DateTime @default(now())
+
+  @@index([projectId])
+}
+
+// ---------- Rank Tracking ----------
+model TrackedKeyword {
+  id           String   @id @default(cuid())
+  projectId    String
+  project      Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  keyword      String
+  country      String
+  language     String
+  device       String   @default("desktop")
+  targetUrl    String?
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  snapshots    RankSnapshot[]
+
+  @@index([projectId])
+}
+
+model RankSnapshot {
+  id               String   @id @default(cuid())
+  projectId        String
+  project          Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  trackedKeywordId String
+  trackedKeyword   TrackedKeyword @relation(fields: [trackedKeywordId], references: [id], onDelete: Cascade)
+
+  position         Int?
+  url              String?
+  visibility       Float?
+  clicks           Int?
+  impressions      Int?
+  ctr              Float?
+  capturedAt       DateTime @default(now())
+
+  @@index([trackedKeywordId, capturedAt])
+  @@index([projectId])
+}
+
+// ---------- SERP Analysis ----------
+model SerpAnalysis {
+  id             String   @id @default(cuid())
+  projectId      String
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  keyword        String
+  country        String
+  language       String
+  device         String   @default("desktop")
+
+  rawResults     Json
+  hasAiOverview  Boolean  @default(false)
+  hasFeaturedSnippet Boolean @default(false)
+  peopleAlsoAsk  Json?
+  localPack      Json?
+
+  aiAnalysis     Json?    // intent, structure, common headings, entities, gaps, scores
+  seoScore       Int?
+  aiSearchScore  Int?
+
+  createdAt      DateTime @default(now())
+
+  @@index([projectId])
+}
+
+// ---------- Competitor Analysis ----------
+model Competitor {
+  id            String   @id @default(cuid())
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  domain        String
+  topPages      Json?
+  topKeywords   Json?
+  backlinks     Json?
+  contentGaps   Json?
+  estTraffic    Int?
+  lastAnalyzed  DateTime @default(now())
+
+  @@index([projectId])
+}
+
+// ---------- Site Audit ----------
+model SiteAudit {
+  id            String   @id @default(cuid())
+  projectId     String
+  project       Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  dataForSeoTaskId String?
+  target        String?
+  status        String   @default("queued") // queued | running | completed | failed
+  issuesSummary Json?
+  brokenLinks   Json?
+  headingIssues Json?
+  metaIssues    Json?
+  imageIssues   Json?
+  speedData     Json?
+  schemaData    Json?
+  startedAt     DateTime @default(now())
+  completedAt   DateTime?
+
+  @@index([projectId])
+}
+
+// ---------- Content Optimizer / AI Content Generator ----------
+model ContentItem {
+  id             String   @id @default(cuid())
+  projectId      String
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  targetKeyword  String
+  title          String?
+  bodyDraft      String?  @db.Text
+
+  keywordDensity Json?
+  semanticCoverage Json?
+  entityCoverage Json?
+  missingQuestions Json?
+  readabilityScore Int?
+  eeatScore      Int?
+
+  seoScore       Int?
+  aiSearchVisibilityScore Int?
+  llmScores      Json?    // per-provider: chatgpt, claude, gemini, perplexity, copilot
+
+  outline        Json?
+  schema         Json?
+  internalLinks  Json?
+  imageAltSuggestions Json?
+
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([projectId])
+}
+
+// ---------- Reports ----------
+model Report {
+  id          String   @id @default(cuid())
+  projectId   String
+  project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  type        String   // pdf | excel | csv | pptx
+  label       String?
+  whiteLabel  Boolean  @default(false)
+  fileUrl     String?
+  createdAt   DateTime @default(now())
+
+  @@index([projectId])
+}
