@@ -90,7 +90,7 @@ export async function POST(req: NextRequest) {
         hasAiOverview,
         hasFeaturedSnippet,
         peopleAlsoAsk,
-        aiAnalysis: aiAnalysis ?? undefined,
+        aiAnalysis: (aiAnalysis ?? undefined) as any,
         seoScore: aiAnalysis?.seoScore ?? null,
         aiSearchScore: aiAnalysis?.aiSearchScore ?? null,
       },

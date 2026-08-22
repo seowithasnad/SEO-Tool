@@ -101,18 +101,18 @@ export async function GET(req: NextRequest) {
       data: {
         status: "completed",
         completedAt: new Date(),
-        issuesSummary,
+        issuesSummary: issuesSummary as any,
         brokenLinks: brokenLinks.slice(0, 100).map((p) => ({
           url: p.url,
           statusCode: p.status_code,
-        })),
+        })) as any,
         headingIssues: headingIssues.slice(0, 100).map((p) => ({
           url: p.url,
-        })),
-        metaIssues: metaIssues.slice(0, 100).map((p) => ({ url: p.url })),
-        imageIssues: imageIssues.slice(0, 100).map((p) => ({ url: p.url })),
-        speedData: speedData.slice(0, 100),
-        schemaData: schemaData.slice(0, 100),
+        })) as any,
+        metaIssues: metaIssues.slice(0, 100).map((p) => ({ url: p.url })) as any,
+        imageIssues: imageIssues.slice(0, 100).map((p) => ({ url: p.url })) as any,
+        speedData: speedData.slice(0, 100) as any,
+        schemaData: schemaData.slice(0, 100) as any,
       },
     });
 
