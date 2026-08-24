@@ -69,12 +69,7 @@ export function Sidebar() {
 
   return (
     <aside className="flex h-screen w-64 shrink-0 flex-col border-r border-neutral-800 bg-neutral-950">
-      <div className="flex h-14 items-center gap-2 border-b border-neutral-800 px-4">
-        <div className="flex h-6 w-6 items-center justify-center rounded bg-brand-500 text-xs text-white">
-          S
-        </div>
-        <span className="text-sm text-neutral-100">SEO Platform</span>
-      </div>
+      <div className="flex h-14 items-center gap-2 border-b border-neutral-800 px-4"> <img src="/logo.svg" alt="Search Velocity" className="h-6 w-6 rounded" /> <span className="text-sm text-neutral-100">Search Velocity</span> </div>
 
       <nav className="flex-1 overflow-y-auto px-2 py-3">
         {NAV_SECTIONS.map((section) => (
