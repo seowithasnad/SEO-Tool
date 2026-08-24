@@ -3,8 +3,8 @@ import { AuthProvider } from "@/components/providers/session-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SEO Platform",
-  description: "Keyword research, SERP analysis, and content optimization.",
+  title: "Search Velocity | SEO Tool by Growth & Velocity",
+  description: "Search Velocity, developed by Growth & Velocity, helps businesses improve search rankings, uncover SEO opportunities, and accelerate organic growth.",
 };
 
 export default function RootLayout({
