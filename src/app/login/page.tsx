@@ -33,12 +33,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-neutral-950 px-4">
       <div className="w-full max-w-sm">
-        <div className="mb-8 flex items-center gap-2">
-          <div className="flex h-7 w-7 items-center justify-center rounded bg-brand-500 text-sm text-white">
-            S
-          </div>
-          <span className="text-sm text-neutral-100">SEO Platform</span>
-        </div>
+       <div className="mb-8 flex items-center gap-2"> <img src="/logo.svg" alt="Search Velocity" className="h-7 w-7 rounded" /> <span className="text-sm text-neutral-100">Search Velocity</span> </div>
 
         <form
           onSubmit={handleSubmit}
