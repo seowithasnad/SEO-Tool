@@ -80,26 +80,9 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-neutral-500">
-          <span>Developed by</span>
-          
-            href="http://growthandvelocity.com/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-brand-500 hover:text-brand-600"
-          >
-            Growth And Velocity
-          </a>
-          <span className="text-neutral-700">|</span>
-          
-            href="http://growthandvelocity.com/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-brand-500 hover:text-brand-600"
-          >
-            growthandvelocity.com
-          </a>
-        </div>
+        <p className="mt-6 text-center text-sm text-neutral-500">
+          Developed by <a href="http://growthandvelocity.com/" target="_blank" rel="noreferrer" className="text-brand-500 hover:text-brand-600">Growth And Velocity</a> | <a href="http://growthandvelocity.com/" target="_blank" rel="noreferrer" className="text-brand-500 hover:text-brand-600">growthandvelocity.com</a>
+        </p>
       </div>
     </div>
   );
