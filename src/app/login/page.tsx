@@ -33,7 +33,10 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-neutral-950 px-4">
       <div className="w-full max-w-sm">
-       <div className="mb-8 flex items-center gap-2"> <img src="/logo.svg" alt="Search Velocity" className="h-7 w-7 rounded" /> <span className="text-sm text-neutral-100">Search Velocity</span> </div>
+        <div className="mb-8 flex items-center gap-2">
+          <img src="/logo.svg" alt="Search Velocity" className="h-7 w-7 rounded" />
+          <span className="text-sm text-neutral-100">Search Velocity</span>
+        </div>
 
         <form
           onSubmit={handleSubmit}
@@ -74,7 +77,7 @@ export default function LoginPage() {
             className="w-full rounded-md bg-brand-500 py-2 text-sm text-white hover:bg-brand-600 disabled:opacity-50"
           >
             {loading ? "Signing in…" : "Sign in"}
-                    </button>
+          </button>
         </form>
 
         <div className="mt-6 flex items-center justify-center gap-2 text-sm text-neutral-500">
