@@ -74,8 +74,29 @@ export default function LoginPage() {
             className="w-full rounded-md bg-brand-500 py-2 text-sm text-white hover:bg-brand-600 disabled:opacity-50"
           >
             {loading ? "Signing in…" : "Sign in"}
-          </button>
+                    </button>
         </form>
+
+        <div className="mt-6 flex items-center justify-center gap-2 text-sm text-neutral-500">
+          <span>Developed by</span>
+          
+            href="http://growthandvelocity.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-brand-500 hover:text-brand-600"
+          >
+            Growth And Velocity
+          </a>
+          <span className="text-neutral-700">|</span>
+          
+            href="http://growthandvelocity.com/"
+            target="_blank"
+            rel="noreferrer"
+            className="text-brand-500 hover:text-brand-600"
+          >
+            growthandvelocity.com
+          </a>
+        </div>
       </div>
     </div>
   );
