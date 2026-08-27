@@ -155,15 +155,7 @@ export default function HomePage() {
         </Link>
 
         <p className="mt-12 text-sm text-neutral-600">
-          Developed by{" "}
-          
-            href="http://growthandvelocity.com/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-neutral-500 hover:text-neutral-300"
-          >
-            Growth And Velocity
-          </a>
+          Developed by <a href="http://growthandvelocity.com/" target="_blank" rel="noreferrer" className="text-neutral-500 hover:text-neutral-300">Growth And Velocity</a>
         </p>
       </section>
     </div>
