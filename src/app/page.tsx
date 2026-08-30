@@ -9,6 +9,7 @@ import {
   Sparkles,
   FileBarChart2,
   ArrowRight,
+  Check,
 } from "lucide-react";
 
 const FEATURES = [
@@ -62,14 +63,66 @@ const FEATURES = [
   },
 ];
 
+const PLANS = [
+  {
+    name: "Starter",
+    price: "₹1,999",
+    audience: "For freelancers & small businesses",
+    highlight: false,
+    features: [
+      "2 projects",
+      "250 keywords tracked",
+      "Daily rank tracking",
+      "3 competitors tracked",
+      "2 site audits / month",
+      "10 content optimizations / month",
+      "AI Overview tracking — 50 keywords",
+      "1 team member",
+    ],
+  },
+  {
+    name: "Growth",
+    price: "₹2,999",
+    audience: "For growing businesses & SEO professionals",
+    highlight: true,
+    features: [
+      "5 projects",
+      "1,000 keywords tracked",
+      "10 competitors tracked",
+      "5 site audits / month",
+      "50 content optimizations / month",
+      "AI Overview tracking — 250 keywords",
+      "Scheduled reports",
+      "Priority support",
+      "3 team members",
+    ],
+  },
+  {
+    name: "Agency",
+    price: "₹4,999",
+    audience: "For SEO agencies & marketing teams",
+    highlight: false,
+    features: [
+      "15 projects",
+      "3,000 keywords tracked",
+      "25 competitors tracked",
+      "15 site audits / month",
+      "200 content optimizations / month",
+      "AI Overview tracking — 1,000 keywords",
+      "White-label reports",
+      "Priority support",
+      "10 team members",
+    ],
+  },
+];
+
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
       {/* Nav */}
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
-        <div className="flex items-center gap-2">
-          <img src="/logo.svg" alt="Search Velocity" className="h-7 w-7 rounded" />
-          <span className="text-sm font-medium">Search Velocity</span>
+        <div className="flex items-center">
+          <img src="/logo-wordmark.png" alt="Search Velocity" className="h-9 w-auto" />
         </div>
         <Link
           href="/login"
@@ -138,6 +191,76 @@ export default function HomePage() {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="mx-auto max-w-6xl border-t border-neutral-900 px-6 py-16">
+        <div className="mb-10 text-center">
+          <h2 className="mb-2 text-sm uppercase tracking-wide text-neutral-500">
+            Pricing
+          </h2>
+          <p className="text-2xl font-semibold tracking-tight sm:text-3xl">
+            SEO intelligence that moves your rankings
+          </p>
+          <p className="mt-2 text-neutral-400">
+            Simple pricing. Powerful SEO insights. Built for growth.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {PLANS.map((plan) => (
+            <div
+              key={plan.name}
+              className={
+                plan.highlight
+                  ? "relative rounded-lg border-2 border-brand-500 bg-neutral-900/60 p-6"
+                  : "relative rounded-lg border border-neutral-800 bg-neutral-900/40 p-6"
+              }
+            >
+              {plan.highlight && (
+                <span className="absolute -top-3 left-6 rounded-full bg-brand-500 px-3 py-0.5 text-xs font-medium text-white">
+                  Most popular
+                </span>
+              )}
+              <div className="mb-1 text-sm font-medium text-neutral-100">
+                {plan.name}
+              </div>
+              <p className="mb-4 text-sm text-neutral-500">{plan.audience}</p>
+              <div className="mb-1 flex items-baseline gap-1">
+                <span className="text-3xl font-semibold text-neutral-100">
+                  {plan.price}
+                </span>
+                <span className="text-sm text-neutral-500">/month</span>
+              </div>
+              <p className="mb-5 text-xs text-neutral-600">
+                or billed annually, ~17% off
+              </p>
+
+              <ul className="mb-6 space-y-2.5">
+                {plan.features.map((f) => (
+                  <li
+                    key={f}
+                    className="flex items-start gap-2 text-sm text-neutral-300"
+                  >
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#a3e635]" />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+
+              <Link
+                href="/login"
+                className={
+                  plan.highlight
+                    ? "flex w-full items-center justify-center gap-2 rounded-md bg-brand-500 py-2 text-sm font-medium text-white hover:bg-brand-600"
+                    : "flex w-full items-center justify-center gap-2 rounded-md border border-neutral-800 py-2 text-sm text-neutral-300 hover:border-neutral-700 hover:bg-neutral-900"
+                }
+              >
+                Get started
+              </Link>
+            </div>
+          ))}
         </div>
       </section>
 
